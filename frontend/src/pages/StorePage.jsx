@@ -1,7 +1,12 @@
-import React from 'react'
+import React from "react";
 
 function StorePage() {
-  return <div><h2>Store Page</h2></div>
+  return (
+    <div>
+      <h2>صفحة المتجر</h2>
+      <p>تفاصيل المتجر ستظهر هنا.</p>
+    </div>
+  );
 }
 
-export default StorePage
+export default StorePage;
