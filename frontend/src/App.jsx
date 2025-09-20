@@ -1,47 +1,30 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Products from "./pages/Products";
-
-function Home() {
-  return (
-    <div>
-      <h2>Welcome to Suq Al-Falah</h2>
-      <p>منصة للتسوق من الفلاح مباشرة.</p>
-      <nav>
-        <Link to="/products">عرض المنتجات</Link>
-      </nav>
-    </div>
-  );
-}
-
-function About() {
-  return (
-    <div>
-      <h2>About Suq Al-Falah</h2>
-      <p>هذه المنصة مخصصة لربط الفلاحين مباشرة بالمستهلك.</p>
-    </div>
-  );
-}
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import './App.css'
+import HomePage from './components/HomePage'
+import LoginPage from './components/LoginPage'
+import RegisterPage from './components/RegisterPage'
+import Dashboard from './components/Dashboard'
+import ProductsPage from './components/ProductsPage'
+import PaymentPage from './components/PaymentPage'
+import Navbar from './components/Navbar'
 
 function App() {
   return (
     <Router>
-      <div>
-        <h1>Suq Al-Falah</h1>
-        <nav style={{ marginBottom: "20px" }}>
-          <Link to="/" style={{ marginRight: "10px" }}>🏠 Home</Link>
-          <Link to="/products" style={{ marginRight: "10px" }}>🛒 Products</Link>
-          <Link to="/about">ℹ️ About</Link>
-        </nav>
-
+      <div className="min-h-screen bg-background">
+        <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
         </Routes>
       </div>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
+
