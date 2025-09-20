@@ -4,11 +4,11 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/api')
+@app.route("/api")
 def home():
     return jsonify({"message": "مرحبًا بكم في API منصة سوق الفلاح!"})
 
-@app.route('/api/stores')
+@app.route("/api/stores")
 def get_stores():
     stores = [
         {"id": 1, "name": "مزرعة الخير", "type": "فلاح", "products": 24, "rating": 4.8},
@@ -18,7 +18,7 @@ def get_stores():
     ]
     return jsonify(stores)
 
-@app.route('/api/stores/<int:store_id>/products')
+@app.route("/api/stores/<int:store_id>/products")
 def get_products(store_id):
     products = [
         {"id": 1, "name": "طماطم طازجة", "price": "40 دج/كغ", "store_id": store_id},
@@ -27,5 +27,5 @@ def get_products(store_id):
     ]
     return jsonify(products)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
