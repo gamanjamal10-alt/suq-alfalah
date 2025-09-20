@@ -1,70 +1,72 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-function Home() {
+const Home = () => {
+  const [stores, setStores] = useState([]);
+
+  useEffect(() => {
+    const mockStores = [
+      { id: 1, name: "مزرعة الخير", type: "فلاح", products: 24, rating: 4.8 },
+      { id: 2, name: "تاجر الجملة أحمد", type: "جملة", products: 89, rating: 4.6 },
+      { id: 3, name: "محل التجزئة - وهران", type: "تجزئة", products: 56, rating: 4.9 },
+      { id: 4, name: "نقل سريع - الجزائر", type: "نقل", products: 0, rating: 4.7 },
+    ];
+    setStores(mockStores);
+  }, []);
+
   return (
-    <div style={{ padding: "20px" }}>
-      {/* قسم الترحيب */}
-      <section style={{ marginBottom: "40px" }}>
-        <h2 style={{ fontSize: "28px", color: "#2e7d32" }}>
-          مرحباً بكم في <span style={{ color: "#4caf50" }}>سوق الفلاح</span>
-        </h2>
-        <p style={{ fontSize: "18px", color: "#555" }}>
-          منصة رقمية تجمع بين الفلاحين والتجار والزبائن في مكان واحد.
-        </p>
-        <Link to="/products">
-          <button
-            style={{
-              marginTop: "20px",
-              backgroundColor: "#4CAF50",
-              color: "white",
-              padding: "12px 24px",
-              border: "none",
-              borderRadius: "8px",
-              fontSize: "16px",
-              cursor: "pointer"
-            }}
-          >
-            🛒 تسوق الآن
-          </button>
-        </Link>
-      </section>
+    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+      <h1 style={{ textAlign: 'center', margin: '30px 0' }}>🌾 مرحبًا بكم في سوق الفلاح!</h1>
+      <p style={{ textAlign: 'center', fontSize: '18px', marginBottom: '40px' }}>
+        منصة تجمع بين الفلاحين، التجار، وشركات النقل — كل في متجره الخاص.
+      </p>
 
-      {/* قسم المميزات */}
-      <section style={{ marginBottom: "40px" }}>
-        <h3 style={{ color: "#2e7d32" }}>✨ مميزات سوق الفلاح</h3>
-        <ul style={{ listStyle: "none", padding: 0, fontSize: "16px" }}>
-          <li>✅ شراء مباشر من الفلاح دون وسطاء</li>
-          <li>✅ أسعار تنافسية وجودة مضمونة</li>
-          <li>✅ إمكانية إنشاء متجرك الخاص</li>
-          <li>✅ دعم فني متواصل</li>
-        </ul>
-      </section>
-
-      {/* قسم الدعوة */}
-      <section style={{ backgroundColor: "#f1f8e9", padding: "20px", borderRadius: "10px" }}>
-        <h3 style={{ color: "#388e3c" }}>📢 هل أنت فلاح أو تاجر؟</h3>
-        <p>
-          يمكنك الآن الانضمام إلى المنصة وإنشاء متجرك الإلكتروني بكل سهولة.
-        </p>
-        <Link to="/create-store">
-          <button
-            style={{
-              marginTop: "10px",
-              backgroundColor: "#388e3c",
-              color: "white",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "6px",
-              cursor: "pointer"
-            }}
-          >
-            ➕ أنشئ متجرك
-          </button>
+      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <Link 
+          to="/create-store"
+          style={{
+            padding: '15px 30px',
+            background: '#28a745',
+            color: 'white',
+            borderRadius: '8px',
+            textDecoration: 'none',
+            fontSize: '18px',
+            fontWeight: 'bold'
+          }}
+        >
+          🛒 أنشئ متجرك الآن
         </Link>
-      </section>
+      </div>
+
+      <h2 style={{ textAlign: 'right', marginBottom: '30px' }}>المتاجر المتوفرة:</h2>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '25px' }}>
+        {stores.map(store => (
+          <Link to={`/store/${store.id}`} key={store.id} style={storeCardLink}>
+            <div style={storeCard}>
+              <h3>{store.name}</h3>
+              <p><strong>النوع:</strong> {store.type === 'فلاح' ? '👨‍🌾 فلاح' : store.type === 'جملة' ? '🏬 تاجر جملة' : store.type === 'تجزئة' ? '🛒 تاجر تجزئة' : '🚚 نقل'}</p>
+              <p><strong>عدد المنتجات:</strong> {store.products || 'خدمات نقل'}</p>
+              <p><strong>التقييم:</strong> ⭐ {store.rating}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+const storeCardLink = {
+  textDecoration: 'none'
+};
+
+const storeCard = {
+  padding: '25px',
+  background: '#fff',
+  borderRadius: '10px',
+  boxShadow: '0 3px 10px rgba(0,0,0,0.1)',
+  textAlign: 'right',
+  transition: 'transform 0.2s',
+  border: '1px solid #eee'
+};
+
+export default Home;
