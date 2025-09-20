@@ -1,12 +1,11 @@
-import React from "react";
+import React from "react"
 
-function Home() {
+function Header() {
   return (
-    <div>
-      <h2>مرحباً بكم في سوق الفلاح</h2>
-      <p>منصة التسوق من الفلاح مباشرة.</p>
-    </div>
-  );
+    <header style={{ backgroundColor: "#4caf50", color: "white", padding: "10px" }}>
+      <h1>سوق الفلاح</h1>
+    </header>
+  )
 }
 
-export default Home;
+export default Header
