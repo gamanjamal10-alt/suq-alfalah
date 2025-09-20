@@ -1,25 +1,46 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import Home from "./pages/Home";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Products from "./pages/Products";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Header from "./components/Header";
+
+function Home() {
+  return (
+    <div>
+      <h2>Welcome to Suq Al-Falah</h2>
+      <p>منصة للتسوق من الفلاح مباشرة.</p>
+      <nav>
+        <Link to="/products">عرض المنتجات</Link>
+      </nav>
+    </div>
+  );
+}
+
+function About() {
+  return (
+    <div>
+      <h2>About Suq Al-Falah</h2>
+      <p>هذه المنصة مخصصة لربط الفلاحين مباشرة بالمستهلك.</p>
+    </div>
+  );
+}
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <div className="container">
+    <Router>
+      <div>
+        <h1>Suq Al-Falah</h1>
+        <nav style={{ marginBottom: "20px" }}>
+          <Link to="/" style={{ marginRight: "10px" }}>🏠 Home</Link>
+          <Link to="/products" style={{ marginRight: "10px" }}>🛒 Products</Link>
+          <Link to="/about">ℹ️ About</Link>
+        </nav>
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 
