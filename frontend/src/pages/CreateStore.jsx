@@ -1,7 +1,12 @@
-import React from 'react'
+import React from "react";
 
 function CreateStore() {
-  return <div><h2>Create Store Page</h2></div>
+  return (
+    <div>
+      <h2>➕ إنشاء متجر جديد</h2>
+      <p>نموذج إنشاء متجر سيظهر هنا.</p>
+    </div>
+  );
 }
 
-export default CreateStore
+export default CreateStore;
