@@ -1,7 +1,12 @@
-import React from 'react'
+import React from "react";
 
 function Home() {
-  return <main><h2>Welcome to Suq Al-Falah</h2></main>
+  return (
+    <div>
+      <h2>Welcome to Suq Al-Falah 🥬🍎</h2>
+      <p>أفضل منصة للتسوق من الخضر و الفواكه.</p>
+    </div>
+  );
 }
 
-export default Home
+export default Home;
