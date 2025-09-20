@@ -1,30 +1,37 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import './App.css'
-import HomePage from './components/HomePage'
-import LoginPage from './components/LoginPage'
-import RegisterPage from './components/RegisterPage'
-import Dashboard from './components/Dashboard'
-import ProductsPage from './components/ProductsPage'
-import PaymentPage from './components/PaymentPage'
-import Navbar from './components/Navbar'
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Products from "./pages/Products";
+import CreateStore from "./pages/CreateStore";
+import StorePage from "./pages/StorePage";
+import Support from "./pages/Support";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import "./App.css";
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-background">
-        <Navbar />
+    <div className="app">
+      <Header />
+      <nav>
+        <Link to="/">🏠 الرئيسية</Link> |{" "}
+        <Link to="/products">🛒 المنتجات</Link> |{" "}
+        <Link to="/create-store">➕ إنشاء متجر</Link> |{" "}
+        <Link to="/support">ℹ️ دعم</Link>
+      </nav>
+      <main>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/create-store" element={<CreateStore />} />
+          <Route path="/store/:id" element={<StorePage />} />
+          <Route path="/support" element={<Support />} />
         </Routes>
-      </div>
-    </Router>
-  )
+      </main>
+      <Footer />
+    </div>
+  );
 }
 
-export default App
+export default App;
 
