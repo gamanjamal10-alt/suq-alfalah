@@ -1,13 +1,16 @@
+import React from "react";
 import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <header>
       <nav>
-        <Link to="/">الرئيسية</Link>
-        <Link to="/products">المنتجات</Link>
-        <Link to="/create-store">إنشاء متجر</Link>
-        <Link to="/support">الدعم</Link>
+        <ul>
+          <li><Link to="/">🏠 Home</Link></li>
+          <li><Link to="/products">🛒 Products</Link></li>
+          <li><Link to="/about">ℹ️ About</Link></li>
+          <li><Link to="/contact">📞 Contact</Link></li>
+        </ul>
       </nav>
     </header>
   );
