@@ -1,0 +1,1 @@
+export default function CreateStore(){return(<div>Create Store Page</div>)}
