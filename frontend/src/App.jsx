@@ -1,9 +1,21 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import StoreCreate from './pages/StoreCreate';
-import SellerDashboard from './pages/SellerDashboard';
-import ProductManager from './pages/ProductManager';
-import PaymentPage from './pages/PaymentPage';
-export default function App(){ return (<Routes><Route path="/login" element={<Login/>}/><Route path="/register" element={<Register/>}/><Route path="/create-store" element={<StoreCreate/>}/><Route path="/dashboard" element={<SellerDashboard/>}/><Route path="/products" element={<ProductManager/>}/><Route path="/payment" element={<PaymentPage/>}/><Route path="*" element={<Navigate to="/login" replace/>}/></Routes>); }
+import { useEffect, useState } from "react";
+import ProductList from "./components/ProductList";
+
+function App() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
+  }, []);
+
+  return (
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+      <h1>🛒 سوق الفلاح</h1>
+      <ProductList products={products} />
+    </div>
+  );
+}
+
+export default App;
