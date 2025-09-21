@@ -1,4 +1,0 @@
-const Store = require('../models/Store'); const Subscription = require('../models/Subscription');
-exports.createStore=async(req,res)=>{ try{ const {name}=req.body; const store=await Store.create({owner:req.user._id,name}); const now=new Date(); const trialEnd=new Date(now); trialEnd.setMonth(trialEnd.getMonth()+1); const subscription=await Subscription.create({store:store._id,startDate:now,endDate:trialEnd,trial:true,paid:false}); store.subscription=subscription._id; await store.save(); req.user.store=store._id; await req.user.save(); res.status(201).json(store);}catch(err){res.status(400).json({error:err.message});}};
-exports.getStores=async(req,res)=>{ const stores=await Store.find().populate('owner'); res.json(stores); };
-exports.getMyStore=async(req,res)=>{ const store=await Store.findOne({owner:req.user._id}).populate('products subscription'); res.json(store); };
