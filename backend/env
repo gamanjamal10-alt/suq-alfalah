@@ -1,0 +1,2 @@
+MONGODB_URI="mongodb+srv://gamanjamal10_db_user:9ZSH9569tGv2S4N5@cluster0.ydvyjky.mongodb.net/suqalfalah?retryWrites=true&w=majority&appName=Cluster0"
+PORT=5000
