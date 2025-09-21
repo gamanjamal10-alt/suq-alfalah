@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+  backend:
+    build: ./backend
+    container_name: suq-backend
+    ports:
+      - '5000:5000'
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/suq-alfalah
+      - JWT_SECRET=supersecretkey
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    container_name: suq-frontend
+    ports:
+      - '3000:80'
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:6
+    container_name: suq-mongo
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - '27017:27017'
+
+volumes:
+  mongo-data:
