@@ -1,27 +1,40 @@
-body {
+* {
   margin: 0;
-  font-family: sans-serif;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
   background: #f9f9f9;
 }
 
+.App {
+  min-height: 100vh;
+}
+
 .navbar {
-  background: #2e7d32;
-  color: white;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
+  background: #004d40 !important;
+  color: white !important;
 }
 
 button {
-  margin-left: 5px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
   cursor: pointer;
+  font-size: 1rem;
 }
 
-.title {
-  text-align: center;
-  margin: 20px 0;
+/* تحسين مظهر الأزرار */
+button:not([style]) {
+  background: #00796b;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0.25rem;
+  border-radius: 4px;
+}
+
+button:hover {
+  background: #004d40;
 }
 
