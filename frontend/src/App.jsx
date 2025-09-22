@@ -1,45 +1,100 @@
-import React, { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import CreateStore from './pages/CreateStore';
-import Products from './pages/Products';
-import StorePage from './pages/StorePage';
-import Support from './pages/Support';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import './App.css';
+import { useEffect, useState } from "react";
 
 function App() {
-  const [apiMessage, setApiMessage] = useState('');
+  const [stores, setStores] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [language, setLanguage] = useState("ar"); // ar | fr
+  const [newStore, setNewStore] = useState("");
 
+  // تحميل المتاجر من الـ API
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api`)
-      .then(res => res.json())
-      .then(data => setApiMessage(data.message))
-      .catch(err => setApiMessage('⚠️ لا يمكن الاتصال بالخادم الآن.'));
+    fetch("https://suq-alfalah.onrender.com/api/stores")
+      .then((res) => res.json())
+      .then((data) => {
+        setStores(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("خطأ في جلب المتاجر:", err);
+        setLoading(false);
+      });
   }, []);
 
-  return (
-    <div className="App">
-      <Header />
-      <main>
-        <div style={{ padding: '20px', background: '#f8f9fa', textAlign: 'right' }}>
-          <h1>🌾 سوق الفلاح</h1>
-          <p>منصة إلكترونية لربط الفلاحين بالتجار وشركات النقل في الجزائر.</p>
-          <div style={{ margin: '15px 0', padding: '10px', background: '#e8f5e9', borderRadius: '5px' }}>
-            <strong>رسالة من الخادم:</strong> {apiMessage}
-          </div>
-        </div>
+  // إضافة متجر جديد
+  const handleAddStore = async () => {
+    if (!newStore) return;
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/create-store" element={<CreateStore />} />
-          <Route path="/store/:id" element={<StorePage />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/support" element={<Support />} />
-        </Routes>
-      </main>
-      <Footer />
+    try {
+      const res = await fetch("https://suq-alfalah.onrender.com/api/stores", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: newStore, type: "فلاح", products: 0 }),
+      });
+
+      const data = await res.json();
+      setStores([...stores, data]);
+      setNewStore("");
+    } catch (error) {
+      console.error("خطأ في إضافة المتجر:", error);
+    }
+  };
+
+  return (
+    <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
+      {/* Navbar */}
+      <header
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          background: "#28a745",
+          padding: "10px 20px",
+          borderRadius: "8px",
+          color: "#fff",
+        }}
+      >
+        <h2>{language === "ar" ? "🛒 سوق الفلاح" : "🛒 Marché du Fellah"}</h2>
+        <div>
+          <button onClick={() => setLanguage("ar")} style={{ marginRight: "10px" }}>
+            العربية
+          </button>
+          <button onClick={() => setLanguage("fr")}>Français</button>
+        </div>
+      </header>
+
+      {/* إضافة متجر */}
+      <section style={{ marginTop: "20px" }}>
+        <h3>{language === "ar" ? "➕ أضف متجرك" : "➕ Ajouter votre magasin"}</h3>
+        <input
+          type="text"
+          placeholder={language === "ar" ? "اسم المتجر" : "Nom du magasin"}
+          value={newStore}
+          onChange={(e) => setNewStore(e.target.value)}
+          style={{ padding: "8px", marginRight: "10px" }}
+        />
+        <button onClick={handleAddStore} style={{ padding: "8px 12px" }}>
+          {language === "ar" ? "إضافة" : "Ajouter"}
+        </button>
+      </section>
+
+      {/* عرض المتاجر */}
+      <section style={{ marginTop: "30px" }}>
+        <h3>{language === "ar" ? "🏬 قائمة المتاجر" : "🏬 Liste des magasins"}</h3>
+        {loading ? (
+          <p>{language === "ar" ? "⏳ جاري التحميل..." : "⏳ Chargement..."}</p>
+        ) : stores.length === 0 ? (
+          <p>{language === "ar" ? "لا توجد متاجر" : "Aucun magasin"}</p>
+        ) : (
+          <ul>
+            {stores.map((store) => (
+              <li key={store.id || store._id}>
+                <b>{store.name}</b> - {language === "ar" ? "منتجات" : "Produits"}:{" "}
+                {store.products}
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </div>
   );
 }
