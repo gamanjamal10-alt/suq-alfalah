@@ -1,3 +1,4 @@
+// backend/server.js
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -11,20 +12,20 @@ const PORT = process.env.PORT || 10000;
 app.use(cors());
 app.use(express.json());
 
-// اتصال بقاعدة البيانات
+// MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('✅ اتصال ناجح بقاعدة البيانات'))
+  .then(() => console.log('✅ Connected to MongoDB Atlas'))
   .catch(err => {
-    console.error('❌ خطأ في الاتصال:', err.message);
+    console.error('❌ MongoDB Connection Error:', err.message);
     process.exit(1);
   });
 
-// صفحة رئيسية للتجربة
+// Test Route
 app.get('/', (req, res) => {
-  res.json({ message: "🚀 سوق الفلاح — السيرفر شغال!" });
+  res.json({ message: "🚀 Suq Alfalah API is running!" });
 });
 
-// صفحة المنتجات — بيانات وهمية مؤقتًا
+// Products Route (Example)
 app.get('/api/products', (req, res) => {
   res.json([
     {
@@ -33,18 +34,11 @@ app.get('/api/products', (req, res) => {
       description: "طازجة من المزرعة",
       price: 150,
       store: { name: "مزرعة الخير" }
-    },
-    {
-      _id: "2",
-      name: "بطاطا محلية",
-      description: "ممتازة للطبخ",
-      price: 90,
-      store: { name: "مزرعة البركة" }
     }
   ]);
 });
 
-// تشغيل السيرفر
+// Start Server
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ السيرفر شغال على المنفذ ${PORT}`);
+  console.log(`✅ Server running on port ${PORT}`);
 });
