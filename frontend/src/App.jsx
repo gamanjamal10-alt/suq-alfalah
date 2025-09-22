@@ -2,99 +2,76 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [stores, setStores] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [language, setLanguage] = useState("ar"); // ar | fr
-  const [newStore, setNewStore] = useState("");
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
 
-  // تحميل المتاجر من الـ API
+  // 🔹 جلب المتاجر من الـ API
   useEffect(() => {
     fetch("https://suq-alfalah.onrender.com/api/stores")
       .then((res) => res.json())
-      .then((data) => {
-        setStores(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("خطأ في جلب المتاجر:", err);
-        setLoading(false);
-      });
+      .then((data) => setStores(data))
+      .catch((err) => console.error("خطأ في جلب المتاجر:", err));
   }, []);
 
-  // إضافة متجر جديد
-  const handleAddStore = async () => {
-    if (!newStore) return;
+  // 🔹 تسجيل متجر جديد
+  const addStore = async (e) => {
+    e.preventDefault();
+
+    const newStore = { name, type };
 
     try {
       const res = await fetch("https://suq-alfalah.onrender.com/api/stores", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: newStore, type: "فلاح", products: 0 }),
+        body: JSON.stringify(newStore),
       });
 
-      const data = await res.json();
-      setStores([...stores, data]);
-      setNewStore("");
-    } catch (error) {
-      console.error("خطأ في إضافة المتجر:", error);
+      if (res.ok) {
+        const savedStore = await res.json();
+        setStores([...stores, savedStore]); // تحديث القائمة
+        setName("");
+        setType("");
+      } else {
+        console.error("فشل في إضافة المتجر");
+      }
+    } catch (err) {
+      console.error("خطأ:", err);
     }
   };
 
   return (
-    <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
-      {/* Navbar */}
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          background: "#28a745",
-          padding: "10px 20px",
-          borderRadius: "8px",
-          color: "#fff",
-        }}
-      >
-        <h2>{language === "ar" ? "🛒 سوق الفلاح" : "🛒 Marché du Fellah"}</h2>
-        <div>
-          <button onClick={() => setLanguage("ar")} style={{ marginRight: "10px" }}>
-            العربية
-          </button>
-          <button onClick={() => setLanguage("fr")}>Français</button>
-        </div>
-      </header>
+    <div style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
+      <h1>🛒 سوق الفلاح</h1>
 
-      {/* إضافة متجر */}
-      <section style={{ marginTop: "20px" }}>
-        <h3>{language === "ar" ? "➕ أضف متجرك" : "➕ Ajouter votre magasin"}</h3>
+      {/* 🟢 عرض المتاجر */}
+      <h2>قائمة المتاجر</h2>
+      <ul>
+        {stores.map((store, index) => (
+          <li key={index}>
+            {store.name} - {store.type}
+          </li>
+        ))}
+      </ul>
+
+      {/* 🟢 إضافة متجر جديد */}
+      <h2>إضافة متجر جديد</h2>
+      <form onSubmit={addStore}>
         <input
           type="text"
-          placeholder={language === "ar" ? "اسم المتجر" : "Nom du magasin"}
-          value={newStore}
-          onChange={(e) => setNewStore(e.target.value)}
-          style={{ padding: "8px", marginRight: "10px" }}
+          placeholder="اسم المتجر"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
         />
-        <button onClick={handleAddStore} style={{ padding: "8px 12px" }}>
-          {language === "ar" ? "إضافة" : "Ajouter"}
-        </button>
-      </section>
-
-      {/* عرض المتاجر */}
-      <section style={{ marginTop: "30px" }}>
-        <h3>{language === "ar" ? "🏬 قائمة المتاجر" : "🏬 Liste des magasins"}</h3>
-        {loading ? (
-          <p>{language === "ar" ? "⏳ جاري التحميل..." : "⏳ Chargement..."}</p>
-        ) : stores.length === 0 ? (
-          <p>{language === "ar" ? "لا توجد متاجر" : "Aucun magasin"}</p>
-        ) : (
-          <ul>
-            {stores.map((store) => (
-              <li key={store.id || store._id}>
-                <b>{store.name}</b> - {language === "ar" ? "منتجات" : "Produits"}:{" "}
-                {store.products}
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+        <input
+          type="text"
+          placeholder="نوع المتجر"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          required
+        />
+        <button type="submit">إضافة</button>
+      </form>
     </div>
   );
 }
