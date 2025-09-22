@@ -1,26 +1,50 @@
-
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
 dotenv.config();
+
 const app = express();
+const PORT = process.env.PORT || 10000;
+
 app.use(cors());
 app.use(express.json());
 
-// MongoDB connection
+// اتصال بقاعدة البيانات
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log("✅ Connected to MongoDB Atlas"))
-  .catch((err) => console.error("❌ MongoDB Error:", err));
-
-// Routes
-app.get('/api', (req, res) => {
-  res.json({
-    message_fr: "API Suq Alfalah prête 🚀",
-    message_ar: "واجهة برمجة تطبيقات سوق الفلاح جاهزة 🚀"
+  .then(() => console.log('✅ اتصال ناجح بقاعدة البيانات'))
+  .catch(err => {
+    console.error('❌ خطأ في الاتصال:', err.message);
+    process.exit(1);
   });
+
+// صفحة رئيسية للتجربة
+app.get('/', (req, res) => {
+  res.json({ message: "🚀 سوق الفلاح — السيرفر شغال!" });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+// صفحة المنتجات — بيانات وهمية مؤقتًا
+app.get('/api/products', (req, res) => {
+  res.json([
+    {
+      _id: "1",
+      name: "طماطم عضوية",
+      description: "طازجة من المزرعة",
+      price: 150,
+      store: { name: "مزرعة الخير" }
+    },
+    {
+      _id: "2",
+      name: "بطاطا محلية",
+      description: "ممتازة للطبخ",
+      price: 90,
+      store: { name: "مزرعة البركة" }
+    }
+  ]);
+});
+
+// تشغيل السيرفر
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ السيرفر شغال على المنفذ ${PORT}`);
+});
