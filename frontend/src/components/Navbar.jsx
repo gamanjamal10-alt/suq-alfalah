@@ -1,15 +1,13 @@
 import React from "react";
 
-function Navbar({ lang, setLang }) {
+export default function Navbar() {
   return (
     <nav className="navbar">
-      <h2>Suq Alfalah</h2>
+      <h1>🛒 سوق الفلاح</h1>
       <div>
-        <button onClick={() => setLang("ar")}>🇩🇿 العربية</button>
-        <button onClick={() => setLang("fr")}>🇫🇷 Français</button>
+        <button>العربية</button>
+        <button>Français</button>
       </div>
     </nav>
   );
 }
-
-export default Navbar;
