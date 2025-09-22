@@ -1,29 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
+import "./index.css";
 
 function App() {
-  const [lang, setLang] = useState("ar"); // ar or fr
+  const [products, setProducts] = useState([]);
 
-  const t = {
-    ar: {
-      welcome: "مرحبا بك في سوق الفلاح",
-      products: "قائمة المنتجات"
-    },
-    fr: {
-      welcome: "Bienvenue à Suq Alfalah",
-      products: "Liste des produits"
-    }
-  };
+  useEffect(() => {
+    fetch("https://suq-alfalah.onrender.com/api/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
-    <div>
-      <Navbar lang={lang} setLang={setLang} />
-      <h1 className="title">{t[lang].welcome}</h1>
-      <ProductList lang={lang} />
-    </div>
+    <>
+      <Navbar />
+      <ProductList products={products} />
+    </>
   );
 }
 
 export default App;
+
 
