@@ -1,23 +1,28 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch("https://suq-alfalah.onrender.com/api/stores")
       .then((res) => res.json())
       .then((data) => setProducts(data))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Error:", err));
   }, []);
 
   return (
-    <div>
-      <h3>قائمة المنتجات</h3>
-      <ul>
-        {products.map((p) => (
-          <li key={p.id}>{p.name} - {p.price} دج</li>
-        ))}
-      </ul>
+    <div className="product-grid">
+      {products.length > 0 ? (
+        products.map((p) => (
+          <div className="product-card" key={p.id}>
+            <h3>{p.name}</h3>
+            <p>🛒 نوع: {p.type}</p>
+            <p>📦 منتجات: {p.products}</p>
+          </div>
+        ))
+      ) : (
+        <p>⏳ جاري تحميل المتاجر...</p>
+      )}
     </div>
   );
 }
