@@ -1,1 +1,27 @@
-body{font-family: Arial, sans-serif; direction: rtl;}
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #f9f9f9;
+}
+
+.navbar {
+  background: #2e7d32;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.title {
+  text-align: center;
+  margin: 20px 0;
+}
+
