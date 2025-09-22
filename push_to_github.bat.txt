@@ -1,12 +1,45 @@
-@echo off
-git init
-git branch -M main
-git remote add origin https://github.com/gamanjamal10-alt/suq-alfalah.git
-git add .
-git commit -m "first commit"
-git push -u origin main
-pause
+import { useState } from "react";
+import "./App.css";
 
+function App() {
+  const [language, setLanguage] = useState<"ar" | "fr">("ar");
+
+  const texts = {
+    ar: {
+      title: "سوق الفلاح",
+      subtitle: "منصة للتسوق من المتاجر المحلية",
+      register: "تسجيل متجر جديد",
+      browse: "تصفح المنتجات",
+    },
+    fr: {
+      title: "Marché Al-Falah",
+      subtitle: "Plateforme pour faire vos achats auprès des commerces locaux",
+      register: "Enregistrer un nouveau magasin",
+      browse: "Parcourir les produits",
+    },
+  };
+
+  return (
+    <div className="app">
+      <nav>
+        <button onClick={() => setLanguage("ar")}>العربية</button>
+        <button onClick={() => setLanguage("fr")}>Français</button>
+      </nav>
+
+      <header>
+        <h1>{texts[language].title}</h1>
+        <p>{texts[language].subtitle}</p>
+      </header>
+
+      <main>
+        <button>{texts[language].register}</button>
+        <button>{texts[language].browse}</button>
+      </main>
+    </div>
+  );
+}
+
+export default App;
 
 
 
