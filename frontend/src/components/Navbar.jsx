@@ -1,20 +1,12 @@
+import React from "react";
 
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-
-function Navbar() {
-  const { i18n, t } = useTranslation();
-
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
-
+function Navbar({ lang, setLang }) {
   return (
-    <nav className="p-4 bg-green-600 text-white flex justify-between">
-      <h1>{t('welcome')}</h1>
+    <nav className="navbar">
+      <h2>Suq Alfalah</h2>
       <div>
-        <button onClick={() => changeLanguage('ar')}>🇩🇿 AR</button>
-        <button onClick={() => changeLanguage('fr')} className="ml-2">🇫🇷 FR</button>
+        <button onClick={() => setLang("ar")}>🇩🇿 العربية</button>
+        <button onClick={() => setLang("fr")}>🇫🇷 Français</button>
       </div>
     </nav>
   );
