@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
   res.json({ message: "🚀 Suq Alfalah API is running!" });
 });
 
-// Products Route (Example)
+// Products Route
 app.get('/api/products', (req, res) => {
   res.json([
     {
@@ -38,7 +38,6 @@ app.get('/api/products', (req, res) => {
   ]);
 });
 
-// Start Server
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ Server running on port ${PORT}`);
 });
