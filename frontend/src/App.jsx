@@ -1,20 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
 import StoreForm from "./components/StoreForm";
 
 function App() {
-  const [lang, setLang] = useState("ar");
-
   return (
-    <>
-      <Navbar lang={lang} setLang={setLang} />
-      <div className="container">
-        <h1>{lang === "ar" ? "سوق الفلاح" : "Suq Alfalah"}</h1>
-        <StoreForm lang={lang} />
-        <ProductList lang={lang} />
-      </div>
-    </>
+    <div>
+      <Navbar />
+      <h1>🚀 سوق الفلاح</h1>
+      <ProductList />
+      <StoreForm />
+    </div>
   );
 }
 

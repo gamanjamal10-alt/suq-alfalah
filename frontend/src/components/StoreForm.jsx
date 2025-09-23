@@ -1,46 +1,22 @@
 import React, { useState } from "react";
-import axios from "axios";
 
-function StoreForm({ lang }) {
-  const [name, setName] = useState("");
-  const [owner, setOwner] = useState("");
+export default function StoreForm() {
+  const [store, setStore] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await axios.post("https://suq-alfalah.onrender.com/api/stores", {
-        name,
-        owner,
-      });
-      alert(lang === "ar" ? "تم تسجيل المتجر ✅" : "Magasin enregistré ✅");
-    } catch (error) {
-      console.error(error);
-      alert("Error");
-    }
+    alert(`تم إضافة المتجر: ${store}`);
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: "2rem" }}>
-      <h2>{lang === "ar" ? "🛍️ تسجيل متجر" : "🛍️ Enregistrer un magasin"}</h2>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder={lang === "ar" ? "اسم المتجر" : "Nom du magasin"}
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
+        value={store}
+        onChange={(e) => setStore(e.target.value)}
+        placeholder="اسم المتجر"
       />
-      <input
-        type="text"
-        placeholder={lang === "ar" ? "اسم المالك" : "Nom du propriétaire"}
-        value={owner}
-        onChange={(e) => setOwner(e.target.value)}
-        required
-      />
-      <button type="submit">
-        {lang === "ar" ? "تسجيل" : "Enregistrer"}
-      </button>
+      <button type="submit">إضافة متجر</button>
     </form>
   );
 }
-
-export default StoreForm;
